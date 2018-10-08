@@ -21,10 +21,10 @@ struct cc {
 
 int solve(string s){
     
-    cc left = {' ', 0};
-    cc right = {' ', 0};
+    cc left = {'X', 0};
+    cc right = {'X', 0};
 
-    int whiteNum = 0;
+
 
     string beads = s + s;
 
@@ -32,23 +32,29 @@ int solve(string s){
     //cout << endl;
 
     int maxCnt = 0;
-
+    int whiteNum = 0;
+    int overlapping = 0;
 
     for(int i = 0; i<s.length()*2; i++){
         char c = beads[i]; 
         
         if (c == 'w') whiteNum ++;
-        else whiteNum = 0;
         
         if(c == right.color || c == 'w'){
             right.number++;
         }else{
             left = right;
-            right = {c, 1};          
+            overlapping = whiteNum;
+            right = {c, 1+overlapping};          
         }
 
-        
-        maxCnt = max(maxCnt, left.number+right.number);
+        int total = left.number + right.number - overlapping;        
+       
+        maxCnt = max(maxCnt, total);
+
+        if (c != 'w'){
+            whiteNum = 0;
+        }
     }
 
     return maxCnt;
@@ -64,15 +70,12 @@ int main(){
 
     fin >> n >> s;
     
-    int r1 = solve(s);
     
-    reverse(s.begin(), s.end());
 
-    int r2 = solve(s);
+    int r = solve(s);
 
-    int r = max(r1,r2);
-
-    if(r > n) r = n;
+    if (r > n) r = n;
+    
 
     fout << r << endl;
 
