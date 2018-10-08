@@ -1,0 +1,17 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build beads",
+            "type": "shell",
+            "command": "c++",
+            "args": [
+                "-std=c++11", "-stdlib=libc++","-g", "-o", "beads", "beads.cpp"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        }
+    ]
+}
