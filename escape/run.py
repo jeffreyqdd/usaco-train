@@ -2,10 +2,11 @@ import glob, os
 from shutil import copyfile
 import subprocess
 import filecmp
+import sys
 
 print ("-- How to use this tool:")
 print ("-- execute this app \"run\" from your working directory")
-print ("-- please put your .cpp, .in and .out files in the same directory")
+print ("-- please put your .cpp, I.x and O.x files in the same directory")
 
 
 # look for the main cpp <project_name>.cpp and find project name
@@ -13,6 +14,12 @@ print ("-- please put your .cpp, .in and .out files in the same directory")
 for file in glob.glob("*.cpp"):
     
     break
+
+print(file)
+
+if file is None or not os.path.isfile(file):
+    print("Error - no *.cpp in current dir. Are you in your working dir?")
+    sys.exit()
 
 project = file[:-4] # get the section before ".cpp"
 print ("Detected project name: "+project)
@@ -29,8 +36,8 @@ else:
 # Test result: true/false
 
 def oneround(projectName, testNo):
-    inFile = str(testNo)+".in"
-    resultFile = str(testNo)+".out"
+    inFile = "I."+str(testNo)
+    resultFile = "O."+str(testNo)
     exeFile = "./"+projectName
     testInFile = projectName+".in"
     testOutFile = projectName + ".out"
@@ -54,10 +61,11 @@ def oneround(projectName, testNo):
 
 
 
-# repeat the following for 1.in, 2.in,... x.in
+# repeat the following for I.1, I.2....I.x
+
 
 tot = 0
-for infile in glob.glob("*.in"):
+for infile in glob.glob("I.*"):
     # skip interim test file in this count
     if infile==project+".in":
         continue
@@ -70,8 +78,8 @@ for i in range(1, tot+1):
     
     print ("INFO - start test round: " + str(i))
     # check existence of the output file
-    if not os.path.isfile(str(i)+".out"):
-        print ("ERROR - could not find "+ str(i) + ".out")
+    if not os.path.isfile("O."+str(i)):
+        print ("ERROR - could not find O."+ str(i) )
         break
 
     # proceed with test

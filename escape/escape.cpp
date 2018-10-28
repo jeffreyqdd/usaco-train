@@ -9,76 +9,65 @@ LANG: C++
 #include <vector>
 #include <algorithm>
 using namespace std;
+
 /*
-GREEDY SOLUTIOn
-- sort based on the lowest rightmost digit
+recursively iterate
+TODO:
+1.read file
+2.recursively hasNoCarry cows
+    - need a function to hasNoCarry carries;
 */
+//globals
+int cow, best = 0, w[20];
+vector<int> subset;
 
-bool comp(int a, int b){
-    int benchmark;
-    if (a > b) benchmark = b;
-    else benchmark = a;
-
-    //get first digit
-    for (int i = 0; i < to_string(benchmark).length(); i++){
-        //get digits
-        int digit_a = a % 10;
-        int digit_b = b% 10;
-
-        if (digit_a < digit_b)return true;
-        else if (digit_a > digit_b) return false;
-
-
-        a = a / 10;
-        b = b / 10;
+bool hasNoCarry(int a, int b){
+    for (; a> 0 && b> 0; a /= 10, b /= 10){
+        if(a%10 + b%10 >= 10) return false;
     }
-    return false;
-    
+    return true;
 }
 
-int solve(vector<int> cWeight, int n){
-    //array has already been sorted, just add and check for carry
-    int solutions = 0;
-    int sumBefore = 0;
-    int sumAfter = 0;
-    for (int i=0; i<n; i++){
-        sumAfter += cWeight[i];
-        // if one digit becomes "smaller" then a carry has been done
-        //cout << "testing:" << sumBefore << ":"<<sumAfter << endl;
-        if (comp(sumAfter, sumBefore)) break;
-        
-        //cout << sumAfter << endl;
-        
-        sumBefore = sumAfter;
-        solutions++;
+void search(int k, int n){
+    if(k == n+1){
 
+        int sum = 0, cnt = 0;
+
+        for (auto i : subset){
+
+            if(hasNoCarry(sum, w[i])){
+                sum += w[i];
+                cnt++;
+            }else{
+                best = max(best, cnt);
+                break;
+            }
+        }
+
+    } else {
+        subset.push_back(k);
+        search(k+1,n);
+        subset.pop_back();
+        search(k+1,n);
     }
-    return solutions;
 }
+
 
 int main(){
     ifstream fin("escape.in");
     ofstream fout("escape.out");
 
-    //read in # of cows
-    int n;
-    fin >> n;
-
-    //read in cow weights
-    vector<int> cWeight;
-    int weight;
-    for (int i = 0; i < n; i++){
-        fin >> weight;
-        cWeight.push_back(weight);
+    fin>>cow;
+    for(int i = 0; i<cow; i++){
+        fin >> w[i];
     }
 
+    fin.close();
 
-    sort(cWeight.begin(), cWeight.end(), comp);
+  
+    search(0,cow-1);
 
-    //for (auto i : cWeight) cout << i << endl;
-    
-    
-    fout << solve(cWeight, n) << endl;
-    
+    fout << best << endl;
+    fout.close();
     return 0;
 }
