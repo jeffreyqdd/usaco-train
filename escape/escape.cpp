@@ -36,13 +36,20 @@ void search(int k, int n){
         for (auto i : subset){
 
             if(hasNoCarry(sum, w[i])){
+                cout<<sum<<"+"<<w[i]<<endl;
                 sum += w[i];
                 cnt++;
             }else{
                 best = max(best, cnt);
+                if (cnt == best) {
+                    cout << "***" << best <<endl;
+                }
                 break;
             }
         }
+        cout<<endl;
+
+
 
     } else {
         subset.push_back(k);

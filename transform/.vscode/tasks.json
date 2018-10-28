@@ -2,11 +2,11 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "build template",
+            "label": "build transform",
             "type": "shell",
             "command": "c++",
             "args": [
-                "-std=c++11", "-stdlib=libc++","-g", "-o", "template", "template.cpp"
+                "-std=c++11", "-stdlib=libc++","-g", "-o", "transform", "transform.cpp"
             ],
             "group": {
                 "kind": "build",
