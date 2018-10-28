@@ -3,6 +3,7 @@ from shutil import copyfile
 import subprocess
 import filecmp
 import sys
+import time
 
 print ("-- How to use this tool:")
 print ("-- execute this app \"run\" from your working directory")
@@ -29,7 +30,7 @@ print ("Detected project name: "+project)
 if os.path.isfile(project):
     print ("INFO - found executable file")
 else:
-    print ("ERROR - could not find the executable file. Have u built it?")
+    print ("ERROR - could not find the executable file. Have you built it?")
 
 
 # Return: 
@@ -74,6 +75,8 @@ for infile in glob.glob("I.*"):
 print ("INFO - found total "+ str(tot) + " test cases")
 
 suc = 0
+
+
 for i in range(1, tot+1):
     
     print ("INFO - start test round: " + str(i))
@@ -83,10 +86,16 @@ for i in range(1, tot+1):
         break
 
     # proceed with test
+
+    start = time.time()
     if oneround(project, i):
+        stop = time.time()
         print ("OK - passed test round: "+ str(i))
+        print("Time: " + str(stop - start))
     else:
+        stop = time.time();
         print ("ERROR - failed test round: " + str(i))
+        print("Time: " + str(stop - start))
         break
 
     suc += 1

@@ -18,8 +18,10 @@ TODO:
     - need a function to hasNoCarry carries;
 */
 //globals
+
 int cow, best = 0, w[20];
 vector<int> subset;
+
 
 bool hasNoCarry(int a, int b){
     for (; a> 0 && b> 0; a /= 10, b /= 10){
@@ -28,51 +30,30 @@ bool hasNoCarry(int a, int b){
     return true;
 }
 
-void search(int k, int n){
-    if(k == n+1){
+//recursive iteration given cow#, sum of weights, # of cows on raft, total cows
+void search(int k, int sum, int cnt, int n){
 
-        int sum = 0, cnt = 0;
+    best = max(best, cnt);
 
-        for (auto i : subset){
+    if(k >= n) return;
 
-            if(hasNoCarry(sum, w[i])){
-                cout<<sum<<"+"<<w[i]<<endl;
-                sum += w[i];
-                cnt++;
-            }else{
-                best = max(best, cnt);
-                if (cnt == best) {
-                    cout << "***" << best <<endl;
-                }
-                break;
-            }
-        }
-        cout<<endl;
+    if(hasNoCarry(sum, w[k])) search(k+1, sum+w[k],cnt+1, n );
 
-
-
-    } else {
-        subset.push_back(k);
-        search(k+1,n);
-        subset.pop_back();
-        search(k+1,n);
-    }
+    search(k+1, sum,cnt, n );
+    
 }
 
 
 int main(){
     ifstream fin("escape.in");
     ofstream fout("escape.out");
-
     fin>>cow;
     for(int i = 0; i<cow; i++){
         fin >> w[i];
     }
-
     fin.close();
 
-  
-    search(0,cow-1);
+    search(0,0,0,cow);
 
     fout << best << endl;
     fout.close();
