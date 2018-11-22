@@ -1,0 +1,17 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build records",
+            "type": "shell",
+            "command": "c++",
+            "args": [
+                "-std=c++11", "-stdlib=libc++","-g", "-o", "records", "records.cpp"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        }
+    ]
+}
