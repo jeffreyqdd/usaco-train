@@ -4,8 +4,10 @@
 #include <vector>
 using namespace std;
 
-#define MAX_BOUND 1000000
-#define MIN_BOUND 0
+#define MAX_BOUND 1000001
+#define MIN_BOUND -1
+
+bool isDebug = false;
 
 struct Point
 {
@@ -17,8 +19,13 @@ struct Point
         return x == a.x && y == a.y;
     }
 
-    bool operator<(const Point &a) const{
-        return x < a.x;
+    bool operator<(const Point &a) const
+    {
+        int dist1 = x + y;
+        int dist2 = a.x + a.y;
+        
+        if(dist1 == dist2) return x < a.x;
+        else return dist1<dist2;
     }
     string print()
     {
@@ -55,11 +62,11 @@ struct Line
     {
 
         //on edge -- for both start and stop
-        if (p == start || p == stop)
-        {
-            //cout << p.print() << endl;
-            return true;
-        }
+        // if (p == start || p == stop)
+        // {
+        //     //cout << p.print() << endl;
+        //     return true;
+        // }
 
         //hortizontal
         if (is_horizontal() && p.y == start.y &&
@@ -85,70 +92,101 @@ vector<Line> fence;
 vector<Point> cow_coord;
 set<Point> seen_cows;
 
-bool is_border(Point p){
-    cout<< "entering is border with" << p.print()<<":"; 
+bool is_border(Point p)
+{
+    if (isDebug)
+        cout << "entering is border with" << p.print() << ":";
 
-    if(p.x == MAX_BOUND || p.y == MAX_BOUND
-    || p.x == MIN_BOUND || p.y == MIN_BOUND){
-        cout << "hit virtual boundary\n";
+    if (p.x == MAX_BOUND || p.y == MAX_BOUND || p.x == MIN_BOUND || p.y == MIN_BOUND)
+    {
+        if (isDebug)
+            cout << "hit virtual boundary\n";
         return true;
     }
-    for(auto f: fence){
-        if(f.is_touched(p)){
-            cout << "hit fence\n";
+    for (auto f : fence)
+    {
+        if (f.is_touched(p))
+        {
+            if (isDebug)
+                cout << "hit fence\n";
             return true;
         }
     }
-    cout << "no hit\n";
+    if (isDebug)
+        cout << "no hit\n";
     return false;
 }
 
-bool is_cow(Point p){
-    for(auto c : cow_coord){
-        if(p == c){
-            return true;
-        }
-    }
-    return false;
-}
-
-
-void fill(Point p, int& counter, set<Point>& have_seen)
+bool is_cow(Point p)
 {
+    for (auto c : cow_coord)
+    {
+        if (p == c)
+        {
+            seen_cows.insert(c);
+            return true;
+        }
+    }
+    return false;
+}
 
-    cout<< "entering fill:"<<p.print()<<" counter=" <<counter<<endl;
+void fill(Point p, int &counter, set<Point> &have_seen, string debug_prefix)
+{
+    string my_prefix = debug_prefix + "...";
+
+    if (isDebug)
+        cout << my_prefix << "entering fill:" << p.print() << " counter=" << counter << endl;
 
     //find adjacent points until touch border
-    cout<<"I have seen\n";
+    if (isDebug)
+    {
+        cout << "I have seen\n";
 
-    for(auto s : have_seen){
-        cout << s.print() <<" ";
+        for (auto s : have_seen)
+        {
+            cout << s.print() << " ";
+        }
+        cout << endl;
     }
-    cout << endl;
-    
 
-    if(have_seen.find(p) !=  have_seen.end()) {
-        //cout<<"seen this before " << p.print() <<endl;
+    if (have_seen.find(p) != have_seen.end())
+    {
+        if (isDebug)
+        {
+            cout << "seen this before " << p.print() << endl;
+            //TO-NOTE:
+            cout << my_prefix << "exiting fill:" << p.print() << " counter=" << counter << endl;
+        }
+
         return;
     }
 
-    if(is_cow(p)){
-        cout << "The cow:" << p.print()<<endl;
+    if (is_cow(p))
+    {
+        if (isDebug)
+            cout << "The cow:" << p.print() << endl;
         counter++;
     }
 
     have_seen.insert(p);
 
-    if(!is_border(p.up())) fill(p.up(), counter,have_seen);
+    string child_prefix = my_prefix + p.print();
 
-    if(!is_border(p.down())) fill(p.down(), counter,have_seen);
+    cout << p.print() <<endl;
+    if (!is_border(p.up()))
+        fill(p.up(), counter, have_seen, child_prefix);
 
-    if(!is_border(p.left())) fill(p.left(), counter,have_seen);
+    if (!is_border(p.down()))
+        fill(p.down(), counter, have_seen, child_prefix);
 
-    if(!is_border(p.right())) fill(p.right(), counter,have_seen);
+    if (!is_border(p.left()))
+        fill(p.left(), counter, have_seen, child_prefix);
 
-    cout<< "exiting fill:"<<p.print()<<" counter=" <<counter<<endl;
+    if (!is_border(p.right()))
+        fill(p.right(), counter, have_seen, child_prefix);
 
+    if (isDebug)
+        cout << my_prefix << "exiting fill:" << p.print() << " counter=" << counter << endl;
 }
 
 int solve()
@@ -156,15 +194,15 @@ int solve()
     int max_cow = 0;
     set<Point> seen;
 
-    /*
+    
     for(auto c: cow_coord){
+        if(seen_cows.find(c) != seen_cows.end()) continue;
         int counter=0;
-        fill(c, counter, seen);
+        fill(cow_coord[0], counter, seen, "");
         max_cow = max(max_cow, counter);
     }
-    */
-    int counter = 0;
-    fill(cow_coord[0], counter, seen);
+    
+    
     return max_cow;
 }
 
@@ -192,7 +230,7 @@ int main()
     fin.close();
 
     cout << solve() << endl;
-    
+
     fout.close();
     return 0;
 }
