@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include <vector>
 using namespace std;
 
 #define MAX_HOLE 12
@@ -19,32 +20,53 @@ bool is_cycle(){
     return false;
 }
 
-int solve(){
-    int i, total = 0;
+vector<string> trace;
+string print_trace(){
+    string s = "";
 
-    //check for unpaired
+    for(auto t : trace) s = s + t + "...";
+
+    return s;
+}
+int solve(){
+    cout << print_trace() << "entering with tree:" <<  endl;
+
+    int i, total = 0;
+    //cout << "entering\n";
+    //find first unpaired
     for(i=1; i<=kHole; i++){
         if(paired[i] == 0) break;
     }
 
-    //check for paired
+
+    //check if all holes have been paired
     if (i > kHole){
-      
         //done pairing so test
-        if(is_cycle()) return 1;
-        else return 0;
+        if(is_cycle()){
+            cout << print_trace()<<"exiting: valid"<<endl;
+            return 1;
+        }
+        else{ 
+            cout <<print_trace()<< "exiting: invalid"<<endl;
+            return 0;
+        }
     }
 
-    //pair and recurse
+    //pair with each unpaired and recurse 
+    // implies the following activity: pair, solve the left ones , unpair
     for(int j=i+1; j<=kHole; j++){
         if(paired[j] == 0){
             paired[i] = j;
             paired[j] = i;
+            trace.push_back(to_string(i) + "-" + to_string(j));
             total += solve();
+            trace.pop_back();
+            cout <<print_trace()<< "clean:"<<i<<"-"<<j <<endl;
             paired[i] = paired[j] = 0;
         }
     }
 
+    cout <<print_trace()<< "exiting total:" << total <<endl;
     return total;
 }
 
