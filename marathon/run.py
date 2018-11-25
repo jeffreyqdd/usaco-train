@@ -37,8 +37,8 @@ else:
 # Test result: true/false
 
 def oneround(projectName, testNo):
-    inFile = "I."+str(testNo)
-    resultFile = "O."+str(testNo)
+    inFile = str(testNo)+".in"
+    resultFile = str(testNo)+".out"
     exeFile = "./"+projectName
     testInFile = projectName+".in"
     testOutFile = projectName + ".out"
@@ -66,7 +66,7 @@ def oneround(projectName, testNo):
 
 
 tot = 0
-for infile in glob.glob("I.*"):
+for infile in glob.glob("*.in"):
     # skip interim test file in this count
     if infile==project+".in":
         continue
@@ -81,8 +81,8 @@ for i in range(1, tot+1):
     
     print ("INFO - start test round: " + str(i))
     # check existence of the output file
-    if not os.path.isfile("O."+str(i)):
-        print ("ERROR - could not find O."+ str(i) )
+    if not os.path.isfile(str(i) + ".out"):
+        print ("ERROR - could not find "+ str(i)+".out")
         break
 
     # proceed with test
