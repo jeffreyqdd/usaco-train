@@ -1,0 +1,22 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build speeding",
+            "type": "shell",
+            "command": "c++",
+            "args": [
+                "-std=c++11",
+                "-stdlib=libc++",
+                "-g",
+                "-o",
+                "speeding",
+                "speeding.cpp"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        }
+    ]
+}
