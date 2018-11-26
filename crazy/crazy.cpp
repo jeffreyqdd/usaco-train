@@ -2,13 +2,14 @@
 #include <fstream>
 #include <set>
 #include <map>
+#include <stack>
 #include <sstream>
 #include <limits>
 
 using namespace std;
 
 // Uncomment to disable debug
-#define NDEBUG
+//#define NDEBUG
 
 #ifdef NDEBUG
 #define Debug(x)
@@ -162,7 +163,6 @@ int kMinX, kMaxX, kMinY, kMaxY;
 
 // all cow positions
 set<Point> cow_position;
-
 // all fence positions, stored in horizontal and vertical groups
 map<int, set<Line>> horizontalFences;
 map<int, set<Line>> verticalFences;
@@ -170,6 +170,10 @@ map<int, set<Line>> verticalFences;
 // two fences only joints at start or stop points
 // check this one so cow will not escape from a joint
 set<Point> fence_joints;
+
+//What I've seen
+set<Point> seen_cows;
+set<Point> seen_pixles;
 
 void InsertFenceToMap(map<int, set<Line>> &fence_map, Line &new_fence, int key_value)
 {
@@ -184,8 +188,6 @@ void InsertFenceToMap(map<int, set<Line>> &fence_map, Line &new_fence, int key_v
         fence_map[key_value] = new_fence_list;
     }
 }
-
-set<Point> seen_cows;
 
 bool IsCow(Point p)
 {
@@ -263,35 +265,46 @@ set<Point> Neighbours(Point p)
     return nb;
 }
 
-void fill(Point p, int &counter, set<Point> &seen_pixels)
+void fill(Point p, int &counter)
 {
-    if (IsCow(p))
+    stack<Point> nodes;
+    nodes.push(p);
+
+    while (nodes.size() > 0)
     {
-        counter++;
-        seen_cows.insert(p);
-    }
+        Debug("Node Size:" << nodes.size() << ",with"
+                           << "counter:" << counter << ",");
+        Point current_node = nodes.top();
+        nodes.pop();
 
-    seen_pixels.insert(p);
+        //do something
+        if (IsCow(current_node))
+        {
+            counter++;
+            seen_cows.insert(current_node);
+        }
+        seen_pixles.insert(current_node);
+        //do something stop
 
-    set<Point> nbs = Neighbours(p);
+        //process child nodes
+        set<Point> nbs = Neighbours(current_node);
+        for (auto nb : nbs)
+        {
+            if (IsBorder(nb)) // skip those on-the boader
+                continue;
 
-    // each neighbor that is not on an boarder and have not been seen
-    for (auto nb : nbs)
-    {
-        if (IsBorder(nb)) // skip those on-the boader
-            continue;
-
-        if (seen_pixels.find(nb) != seen_pixels.end()) // skip those have seen before
-            continue;
-
-        fill(nb, counter, seen_pixels);
+            if (seen_pixles.find(nb) != seen_pixles.end()) // skip those have seen before
+                continue;
+            Debug("inserting:" << nb << " ");
+            nodes.push(nb);
+        }
+        Debug(endl);
     }
 }
 
 int solve()
 {
     int max_cow = 0;
-    set<Point> seen;
 
     for (auto c : cow_position)
     {
@@ -304,7 +317,8 @@ int solve()
         // use any point this not a fence as start point,
         // here - use first known cow position
 
-        fill(*cow_position.begin(), counter, seen);
+        fill(*cow_position.begin(), counter);
+
         max_cow = max(max_cow, counter);
 
         Debug("Stop the new Cow: " << c << " max = " << max_cow << endl);

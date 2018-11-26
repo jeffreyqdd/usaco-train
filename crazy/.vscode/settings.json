@@ -7,6 +7,7 @@
         "iosfwd": "cpp",
         "algorithm": "cpp",
         "queue": "cpp",
-        "set": "cpp"
+        "set": "cpp",
+        "stack": "cpp"
     }
 }
