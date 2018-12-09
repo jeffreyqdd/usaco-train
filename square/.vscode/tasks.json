@@ -2,7 +2,7 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "build square",
+            "label": "build blocks",
             "type": "shell",
             "command": "c++",
             "args": [
@@ -10,8 +10,8 @@
                 "-stdlib=libc++",
                 "-g",
                 "-o",
-                "square",
-                "square.cpp"
+                "blocks",
+                "blocks.cpp"
             ],
             "group": {
                 "kind": "build",

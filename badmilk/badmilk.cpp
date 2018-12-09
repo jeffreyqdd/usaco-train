@@ -3,6 +3,7 @@
 #include <vector>
 #include <map>
 #include <set>
+#include <algorithm>
 using namespace std;
 
 bool IsDebug = true;
@@ -52,7 +53,7 @@ vector<Sick> sick;
 int solve()
 {
     map<int, int> suspicious_milk; //maps milkID to # of occurrences
-    int max_milk = 0;              //counter remebering the highest occurence of milk poisoning
+    int max_milk = 0;              //counter remebering the highest occurence of milk poisoning done by a single milk.
 
     //vector rounds (containing the the milk drinking) is already sorted based on time [start, stop]
     //vector sick (people who got sick) is already sorted based on time as well [early sick, late sick]

@@ -1,7 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
-
+#include <algorithm>
 using namespace std;
 
 //comment to start debugging
@@ -82,6 +82,7 @@ int Solve()
     }
     return total;
 }
+
 int main()
 {
     ifstream fin("learning.in");

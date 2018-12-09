@@ -5,7 +5,7 @@ using namespace std;
 
 //comment to start debugging
 //un-comment to stop debugging
-#define NDEBUG
+//#define NDEBUG
 
 #ifdef NDEBUG
 #define Debug(x)

@@ -23,17 +23,16 @@ int main()
     {
         string s1, s2, combined = "";
         fin >> s1 >> s2;
-
+        //read
         for (auto c : s1)
         {
             word1_cnt[c - 'a']++;
         }
         for (auto c : s2)
         {
-            //process bc it's unique
             word2_cnt[c - 'a']++;
         }
-
+        //solve
         for (int j = 0; j < 26; j++)
         {
             letter_cnt[j] += max(word1_cnt[j], word2_cnt[j]);
@@ -41,7 +40,6 @@ int main()
             word1_cnt[j] = word2_cnt[j] = 0;
         }
     }
-
     fin.close();
     for (int i = 0; i < 26; i++)
         fout << letter_cnt[i] << endl;
