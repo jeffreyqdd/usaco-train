@@ -1,0 +1,22 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build mixmilk",
+            "type": "shell",
+            "command": "c++",
+            "args": [
+                "-std=c++11",
+                "-stdlib=libc++",
+                "-g",
+                "-o",
+                "mixmilk",
+                "mixmilk.cpp"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        }
+    ]
+}

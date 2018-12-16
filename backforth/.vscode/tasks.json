@@ -1,0 +1,22 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build backforth",
+            "type": "shell",
+            "command": "c++",
+            "args": [
+                "-std=c++11",
+                "-stdlib=libc++",
+                "-g",
+                "-o",
+                "backforth",
+                "backforth.cpp"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        }
+    ]
+}

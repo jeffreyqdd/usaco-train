@@ -8,6 +8,9 @@
         "algorithm": "cpp",
         "queue": "cpp",
         "set": "cpp",
-        "stack": "cpp"
+        "stack": "cpp",
+        "ostream": "cpp",
+        "__tree": "cpp",
+        "iterator": "cpp"
     }
 }

@@ -1,31 +1,635 @@
-horizontal fences:
-k=0,v=[(0,0),(10,0)];
-k=5,v=[(1,5),(10,5)];[(10,5),(12,5)];
-k=7,v=[(0,7),(12,7)];
-vertical fences:
-k=0,v=[(0,0),(0,7)];
-k=10,v=[(10,0),(10,5)];
-k=12,v=[(12,5),(12,7)];
-Cow Position:(3,4),(6,6),(17,3),
+[0,10,10,10,12,10,10,1,12,12,0,12,0,0,3,6,17,]
+[0,0,0,5,5,5,5,5,5,7,7,7,7,0,4,6,3,]
 
-Bounding box: -1 18 -1 8
-0,1,3,6,10,12,17,
-0,3,4,5,6,7,
-Start from new Cow: (3,4)
-Node Size:1,withcounter:0,inserting:(1,4) inserting:(3,3) inserting:(6,4) 
-Node Size:3,withcounter:1,inserting:(6,3) 
-Node Size:3,withcounter:1,inserting:(3,3) 
-Node Size:3,withcounter:1,inserting:(1,3) 
-Node Size:3,withcounter:1,inserting:(1,4) 
-Node Size:3,withcounter:1,inserting:(1,5) 
-Node Size:3,withcounter:1,inserting:(1,6) 
-Node Size:3,withcounter:1,inserting:(3,6) 
-Node Size:3,withcounter:1,inserting:(6,6) 
-Node Size:3,withcounter:1,inserting:(10,6) 
-Node Size:3,withcounter:2,
-Node Size:2,withcounter:2,
-Node Size:1,withcounter:2,
-Stop the new Cow: (3,4) max = 2
-Start from new Cow: (17,3)
-Node Size:1,withcounter:0,
-Stop the new Cow: (17,3) max = 2
+[2,10,10,10,12,10,10,4,12,12,2,12,2,2,6,8,14,]
+[2,2,2,8,8,8,8,8,8,12,12,12,12,2,6,10,4,]
+6,6
+10,8
+4,14
+X X X X X X X X X X X X X X X X X 
+X . . . . . . . . . . . . . . . X 
+X . X X X X X X X X X . . . . . X 
+X . X . . . . . . . X . . . . . X 
+X . X . . . . . . . X . . . C . X 
+X . X . . . . . . . X . . . . . X 
+X . X . . . C . . . X . . . . . X 
+X . X . . . . . . . X . . . . . X 
+X . X . X X X X X X X X X . . . X 
+X . X . . . . . . . . . X . . . X 
+X . X . . . . . C . . . X . . . X 
+X . X . . . . . . . . . X . . . X 
+X . X X X X X X X X X X X . . . X 
+X . . . . . . . . . . . . . . . X 
+X X X X X X X X X X X X X X X X X 
+Entering cow(6,6)
+Seen Cow6,6
+valid node7,6
+valid node5,6
+valid node6,7
+valid node6,5
+valid node7,5
+valid node5,5
+valid node6,6
+valid node6,4
+valid node7,4
+valid node5,4
+repeat
+valid node6,3
+valid node7,3
+valid node5,3
+repeat
+invalid node6,2
+repeat
+valid node4,3
+repeat
+invalid node5,2
+repeat
+valid node3,3
+valid node4,4
+invalid node4,2
+repeat
+valid node3,4
+valid node4,5
+repeat
+repeat
+valid node3,5
+valid node4,6
+repeat
+repeat
+valid node3,6
+valid node4,7
+repeat
+valid node5,7
+valid node3,7
+invalid node4,8
+repeat
+repeat
+invalid node2,7
+valid node3,8
+repeat
+repeat
+invalid node2,8
+valid node3,9
+repeat
+valid node4,9
+invalid node2,9
+valid node3,10
+repeat
+valid node4,10
+invalid node2,10
+valid node3,11
+repeat
+valid node4,11
+invalid node2,11
+invalid node3,12
+repeat
+valid node5,11
+repeat
+invalid node4,12
+repeat
+valid node6,11
+repeat
+invalid node5,12
+valid node5,10
+valid node6,10
+repeat
+repeat
+valid node5,9
+valid node6,9
+repeat
+repeat
+invalid node5,8
+valid node7,9
+repeat
+repeat
+invalid node6,8
+valid node8,9
+repeat
+valid node7,10
+invalid node7,8
+valid node8,10
+repeat
+valid node7,11
+repeat
+valid node8,11
+repeat
+invalid node7,12
+repeat
+valid node9,11
+repeat
+invalid node8,12
+repeat
+valid node10,11
+repeat
+invalid node9,12
+valid node9,10
+valid node10,10
+repeat
+repeat
+valid node9,9
+valid node10,9
+repeat
+repeat
+invalid node9,8
+valid node11,9
+repeat
+repeat
+invalid node10,8
+invalid node12,9
+repeat
+valid node11,10
+invalid node11,8
+invalid node12,10
+repeat
+valid node11,11
+repeat
+invalid node12,11
+repeat
+invalid node11,12
+repeat
+repeat
+repeat
+repeat
+repeat
+repeat
+repeat
+invalid node10,12
+repeat
+Seen Cow6,6
+repeat
+repeat
+repeat
+repeat
+repeat
+repeat
+repeat
+invalid node8,8
+repeat
+repeat
+repeat
+repeat
+repeat
+repeat
+invalid node6,12
+repeat
+repeat
+repeat
+repeat
+repeat
+repeat
+repeat
+repeat
+repeat
+repeat
+repeat
+repeat
+repeat
+repeat
+invalid node2,6
+repeat
+repeat
+repeat
+invalid node2,5
+repeat
+repeat
+repeat
+invalid node2,4
+repeat
+repeat
+repeat
+invalid node2,3
+repeat
+invalid node3,2
+valid node8,3
+repeat
+repeat
+invalid node7,2
+valid node9,3
+repeat
+valid node8,4
+invalid node8,2
+valid node9,4
+repeat
+valid node8,5
+repeat
+valid node9,5
+repeat
+valid node8,6
+repeat
+valid node9,6
+repeat
+valid node8,7
+repeat
+valid node9,7
+valid node7,7
+repeat
+repeat
+repeat
+repeat
+repeat
+repeat
+invalid node10,7
+repeat
+repeat
+repeat
+invalid node10,6
+repeat
+repeat
+repeat
+invalid node10,5
+repeat
+repeat
+repeat
+invalid node10,4
+repeat
+repeat
+repeat
+invalid node10,3
+repeat
+repeat
+invalid node9,2
+repeat
+repeat
+repeat
+repeat
+repeat
+repeat
+repeat
+repeat
+Seen Cow6,6
+repeat
+repeat
+repeat
+repeat
+repeat
+repeat
+repeat
+repeat
+repeat
+repeat
+repeat
+repeat
+repeat
+repeat
+repeat
+repeat
+repeat
+repeat
+repeat
+repeat
+repeat
+repeat
+repeat
+repeat
+Entering cow(8,10)
+Entering cow(14,4)
+Seen Cow14,4
+valid node15,4
+valid node13,4
+valid node14,5
+valid node14,3
+valid node15,3
+valid node13,3
+valid node14,4
+valid node14,2
+valid node15,2
+valid node13,2
+repeat
+valid node14,1
+valid node15,1
+valid node13,1
+repeat
+invalid node14,0
+repeat
+valid node12,1
+repeat
+invalid node13,0
+repeat
+valid node11,1
+valid node12,2
+invalid node12,0
+repeat
+valid node11,2
+valid node12,3
+repeat
+repeat
+valid node11,3
+valid node12,4
+repeat
+repeat
+valid node11,4
+valid node12,5
+repeat
+valid node13,5
+valid node11,5
+valid node12,6
+repeat
+valid node13,6
+valid node11,6
+valid node12,7
+repeat
+valid node13,7
+valid node11,7
+invalid node12,8
+repeat
+repeat
+repeat
+repeat
+repeat
+valid node14,7
+repeat
+valid node13,8
+repeat
+valid node14,8
+repeat
+valid node13,9
+repeat
+valid node14,9
+repeat
+valid node13,10
+repeat
+valid node14,10
+repeat
+valid node13,11
+repeat
+valid node14,11
+repeat
+valid node13,12
+repeat
+valid node14,12
+invalid node12,12
+valid node13,13
+repeat
+valid node14,13
+valid node12,13
+invalid node13,14
+repeat
+repeat
+valid node11,13
+invalid node12,14
+repeat
+repeat
+valid node10,13
+invalid node11,14
+repeat
+repeat
+valid node9,13
+invalid node10,14
+repeat
+repeat
+valid node8,13
+invalid node9,14
+repeat
+repeat
+valid node7,13
+invalid node8,14
+repeat
+repeat
+valid node6,13
+invalid node7,14
+repeat
+repeat
+valid node5,13
+invalid node6,14
+repeat
+repeat
+valid node4,13
+invalid node5,14
+repeat
+repeat
+valid node3,13
+invalid node4,14
+repeat
+repeat
+valid node2,13
+invalid node3,14
+repeat
+repeat
+valid node1,13
+invalid node2,14
+invalid node2,12
+repeat
+invalid node0,13
+invalid node1,14
+valid node1,12
+repeat
+invalid node0,12
+repeat
+valid node1,11
+repeat
+invalid node0,11
+repeat
+valid node1,10
+repeat
+invalid node0,10
+repeat
+valid node1,9
+repeat
+invalid node0,9
+repeat
+valid node1,8
+repeat
+invalid node0,8
+repeat
+valid node1,7
+repeat
+invalid node0,7
+repeat
+valid node1,6
+repeat
+invalid node0,6
+repeat
+valid node1,5
+repeat
+invalid node0,5
+repeat
+valid node1,4
+repeat
+invalid node0,4
+repeat
+valid node1,3
+repeat
+invalid node0,3
+repeat
+valid node1,2
+invalid node2,2
+invalid node0,2
+repeat
+valid node1,1
+valid node2,1
+invalid node0,1
+repeat
+invalid node1,0
+valid node3,1
+repeat
+repeat
+invalid node2,0
+valid node4,1
+repeat
+repeat
+invalid node3,0
+valid node5,1
+repeat
+repeat
+invalid node4,0
+valid node6,1
+repeat
+repeat
+invalid node5,0
+valid node7,1
+repeat
+repeat
+invalid node6,0
+valid node8,1
+repeat
+repeat
+invalid node7,0
+valid node9,1
+repeat
+repeat
+invalid node8,0
+valid node10,1
+repeat
+repeat
+invalid node9,0
+repeat
+repeat
+invalid node10,2
+invalid node10,0
+valid node15,13
+repeat
+invalid node14,14
+repeat
+invalid node16,13
+repeat
+invalid node15,14
+valid node15,12
+invalid node16,12
+repeat
+repeat
+valid node15,11
+invalid node16,11
+repeat
+repeat
+valid node15,10
+invalid node16,10
+repeat
+repeat
+valid node15,9
+invalid node16,9
+repeat
+repeat
+valid node15,8
+invalid node16,8
+repeat
+repeat
+valid node15,7
+invalid node16,7
+repeat
+repeat
+valid node15,6
+invalid node16,6
+valid node14,6
+repeat
+valid node15,5
+invalid node16,5
+repeat
+repeat
+repeat
+repeat
+repeat
+repeat
+repeat
+repeat
+repeat
+repeat
+repeat
+repeat
+repeat
+repeat
+repeat
+repeat
+repeat
+repeat
+repeat
+repeat
+repeat
+repeat
+repeat
+repeat
+repeat
+repeat
+repeat
+repeat
+repeat
+repeat
+repeat
+repeat
+repeat
+repeat
+repeat
+repeat
+repeat
+repeat
+repeat
+repeat
+repeat
+repeat
+repeat
+repeat
+repeat
+repeat
+repeat
+repeat
+repeat
+repeat
+repeat
+repeat
+repeat
+repeat
+repeat
+repeat
+repeat
+repeat
+repeat
+repeat
+repeat
+repeat
+invalid node11,0
+invalid node16,1
+repeat
+repeat
+invalid node15,0
+repeat
+repeat
+repeat
+repeat
+invalid node16,2
+repeat
+repeat
+repeat
+Seen Cow14,4
+repeat
+repeat
+repeat
+repeat
+repeat
+repeat
+repeat
+repeat
+invalid node16,3
+repeat
+repeat
+repeat
+repeat
+repeat
+repeat
+repeat
+repeat
+repeat
+repeat
+repeat
+invalid node16,4
+repeat
+repeat
+repeat
