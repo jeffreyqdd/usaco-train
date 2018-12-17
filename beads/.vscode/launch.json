@@ -15,11 +15,7 @@
             "cwd": "${workspaceFolder}",
             "environment": [],
             "externalConsole": true,
-            "MIMode": "lldb",
-            "logging": {
-                "trace": true,
-                "engineLogging": true
-            }
+            "MIMode": "lldb"
         }
     ]
 }
