@@ -1,0 +1,17 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build milk3",
+            "type": "shell",
+            "command": "c++",
+            "args": [
+                "-std=c++11", "-stdlib=libc++","-g", "-o", "milk3", "milk3.cpp"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        }
+    ]
+}
