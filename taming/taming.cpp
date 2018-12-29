@@ -12,6 +12,7 @@ void Solve(int &a, int &b)
         cout << logs[i] << " ";
     cout << endl;
     */
+
     for (int i = kLogs; i >= 1; i--)
     {
         int current = logs[i], previous = logs[i - 1];
