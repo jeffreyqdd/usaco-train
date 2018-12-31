@@ -1,0 +1,145 @@
+#include <iostream>
+#include <fstream>
+#include <vector>
+#include <map>
+using namespace std;
+
+// Comment to enable debug
+//#define NDEBUG
+
+#ifdef NDEBUG
+#define Debug(x)
+#define DebugCollection(x)
+#define DebugMap(x)
+#define DebugMapCollection(x)
+#define Debug2D(l, x, y)
+#else
+#define Debug(x) cout << x
+#define DebugCollection(x)    \
+    do                        \
+    {                         \
+        cout << "[";          \
+        for (auto e : x)      \
+            cout << e << ","; \
+        cout << "]" << endl;  \
+    } while (0)
+
+#define DebugCollectionTill(x, l) \
+    do                            \
+    {                             \
+        cout << "(" << l << ")["; \
+        int i_dbg = 0;            \
+        for (auto e : x)          \
+            if (i_dbg++ == l)     \
+                break;            \
+            else                  \
+                cout << e << ","; \
+        cout << "]" << endl;      \
+    } while (0)
+
+#define Debug2D(l, x, y)            \
+    for (int r = 0; r < y; r++)     \
+    {                               \
+        for (int c = 0; c < x; c++) \
+        {                           \
+            cout << l[r][c] << " "; \
+        }                           \
+        cout << endl;               \
+    }
+#endif
+
+int kCow, kOrder, kPos;
+vector<int> cow_order;
+
+map<int, vector<int>> fixed_cows;
+map<int, int> fixed_cow_ids_by_pos;
+
+int main()
+{
+    ifstream fin("milkorder.in");
+    ofstream fout("milkorder.out");
+
+    fin >> kCow >> kOrder >> kPos;
+
+    for (int i = 0; i < kOrder; i++)
+    {
+        int id;
+        fin >> id;
+        cow_order.push_back(id);
+    }
+
+    for (int i = 0; i < kPos; i++)
+    {
+        int id, t;
+        fin >> id >> t;
+        fixed_cows[id] = {t, 0};
+        fixed_cow_ids_by_pos[t] = id;
+    }
+
+    // store the ordered cows and store the number_of_cows before each fixed cow
+    //
+    vector<int> before_me = 0;
+    for (auto c : cow_order)
+    {
+        int found_fixed_cow;
+
+        auto it_fixed_cow = fixed_cows.find(c);
+
+        if (it_fixed_cow == fixed_cows.end()) // not a fixed cow
+        {
+            before_me.push_back(c);
+        }
+        else // a fixed cow
+        {
+            it_fixed_cow->second.second = before_me;
+            before_me.clear();
+        }
+    }
+
+    // debug
+    for (auto fc : fixed_cows)
+    {
+        cout << to_string(fc.first) << " = " << to_string(fc.second.first) << "," << to_string(fc.second.second) << endl;
+    }
+
+    // walk through all the fixed cows
+    int best_loc = -1;
+    int prev_fixed_cow_pos = 1;
+
+    int fc_pos;
+    int fc_before;
+    for (auto c : fixed_cow_ids_by_pos)
+    {
+
+        auto fc = fixed_cows[c.second];
+        fc_pos = fc.first;
+        fc_before = fc.second;
+
+        // speical case 1: if cow #1 has a fixed post
+        if (c == 1)
+        {
+            best_loc = fc_pos;
+            break;
+        }
+
+        // check if there available slots > num_cows_before
+        if (fc_pos - prev_fixed_cow_pos > (fc_before + 1))
+        {
+            best_loc = prev_fixed_cow_pos + 1;
+            break;
+        }
+        else
+        {
+            prev_fixed_cow_pos = fc_pos;
+        }
+    }
+
+    if (best_loc < 0)
+        best_loc = fc_pos + 1;
+
+    fin.close();
+
+    fout << best_loc << endl;
+
+    fout.close();
+}
