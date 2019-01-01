@@ -38,9 +38,8 @@ using namespace std;
 #endif
 
 int kCow, kStatus, kFixed;
-int status[101], order[101];
 
-int NextValidPos(int &prev_visit_pos, int current_cow, int next_cow, int order_cp[101])
+int NextValidPos(int &prev_visit_pos, int current_cow, int next_cow, vector<int> const &order_cp)
 {
     //finds optimal position for a cow with social status
     //will return -1 if it breaks a rule
@@ -67,7 +66,7 @@ int NextValidPos(int &prev_visit_pos, int current_cow, int next_cow, int order_c
         //no rules are violated
         if (order_cp[i] == 0)
         {
-            //current_cowly in the best postion for the cow
+            //currently in the best postion for the cow
             //if last number;
             if (next_cow == -1)
             {
@@ -78,12 +77,9 @@ int NextValidPos(int &prev_visit_pos, int current_cow, int next_cow, int order_c
             //set position to next if next is already recorded
             for (int j = i; j <= kCow; j++)
             {
-                if (next_cow == 53)
-                    cout << order_cp[j] << endl;
 
                 if (order_cp[j] == next_cow)
                 {
-                    cout << "here\n";
                     prev_visit_pos = j;
                     return i;
                 }
@@ -95,21 +91,29 @@ int NextValidPos(int &prev_visit_pos, int current_cow, int next_cow, int order_c
     return -1;
 }
 
-int IsValidSocialOrder(int order_cp[101])
+//given a hierarchal order, this function checks if it is valid (as in it satisfies the constraints)
+//returns position of cow 1 or -1 if the social status order is invalid
+int IsValidSocialOrder(vector<int> status_cp, vector<int> const &orig_order)
 {
-    //given a hierarchal order, this function checks if it is valid (as in it satisfies the constraints)
-    //returns position of cow 1 or -1 if the social status order is invalid
+
+    vector<int> order_cp(orig_order);
+    DebugCollectionTill(order_cp, kCow);
+
     int pos = 1;
 
     int candidate = 0;
 
-    for (int i = 0; i < kStatus; i++)
+    for (int i = 0; i < status_cp.size(); i++)
     {
-        int current_cow = status[i], next = status[i + 1];
+        int current_cow = status_cp[i];
+        int next_cow = -1;
 
-        int index = NextValidPos(pos, current_cow, next, order_cp);
+        if (i < status_cp.size() - 1)
+            next_cow = status_cp[i + 1];
 
-        Debug(current_cow << ":" << next << "-->" << index << endl);
+        int index = NextValidPos(pos, current_cow, next_cow, order_cp);
+
+        Debug(current_cow << ":" << next_cow << "-->" << index << endl);
 
         if (index != -1)
         {
@@ -121,13 +125,8 @@ int IsValidSocialOrder(int order_cp[101])
         {
             return -1;
         }
-        for (int i = 0; i < kCow; i++)
-        {
-            cout << order_cp[i] << " ";
-        }
-        cout << endl
-             << endl;
-        //DebugCollectionTill(*order_cp, kCow);
+        DebugCollectionTill(order_cp, kCow);
+        Debug(endl);
     }
     return candidate;
 }
@@ -136,6 +135,8 @@ int main()
 {
     ifstream fin("milkorder.in");
     ofstream fout("milkorder.out");
+
+    vector<int> status, order(101, 0);
 
     //Total # of cows, cows in social status, cows in fixed positions;
     fin >> kCow >> kStatus >> kFixed;
@@ -148,14 +149,8 @@ int main()
         fin >> cow_num;
         if (cow_num == 1)
             is_present = true;
-        status[i] = cow_num;
+        status.push_back(cow_num);
     }
-    if (!is_present)
-    {
-        status[kStatus] = 1;
-        kStatus++;
-    }
-    status[kStatus] = -1;
 
     //fill in order with fixed cows
     for (int i = 0; i < kFixed; i++)
@@ -172,45 +167,38 @@ int main()
         order[pos] = id;
     }
 
-    DebugCollectionTill(status, kStatus);
-    DebugCollectionTill(order, kFixed);
-    Debug(is_present << endl
-                     << endl);
+    vector<int> status_cp(status);
 
-    //cout << IsValidSocialOrder(order) << endl;
-
-    int order_cp[101];
+    if (!is_present)
+    {
+        status_cp.insert(status_cp.begin(), 1);
+    }
 
     //DebugCollectionTill(order_cp, 10);
-
+    DebugCollection(status_cp);
     if (is_present)
     {
-        fout << IsValidSocialOrder(order) << endl;
+        fout << IsValidSocialOrder(status_cp, order) << endl;
     }
     else
     {
-        int best = 200, index = 200;
-        for (int i = kStatus - 1; i >= 1; i--)
+        int count = 0;
+        while (true)
         {
-            DebugCollectionTill(status, kStatus);
-
-            memcpy(order_cp, order, sizeof(order));
-            index = IsValidSocialOrder(order_cp);
-            if (index != -1)
-                best = min(best, index);
-
-            swap(status[i - 1], status[i]);
-            //Debug(endl);
+            int ret = IsValidSocialOrder(status_cp, order);
+            if (ret > 0)
+            {
+                fout << ret << endl;
+                break;
+            }
+            else
+            {
+                iter_swap(status_cp.begin() + count, status_cp.begin() + count + 1);
+                count++;
+            }
         }
-        DebugCollectionTill(status, kStatus);
-
-        memcpy(order_cp, order, sizeof(order));
-        index = IsValidSocialOrder(order_cp);
-        if (index != -1)
-            best = min(best, index);
-
-        fout << best << endl;
     }
+
     fout.close();
     return 0;
 }
