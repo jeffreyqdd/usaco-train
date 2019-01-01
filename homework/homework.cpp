@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include <algorithm>
 using namespace std;
 
 /*
@@ -69,7 +70,7 @@ void Solve(vector<int> &solutions)
         /*
         cout << cumulative_score << "-" << lowest_score << " / " << remaining_questions - 1
              << " = " << average << "   " << solutions.size() << "-->" << i << endl;
-    */
+        */
         //else its not a solution so do nothing
     }
     return;
