@@ -8,7 +8,7 @@
             "name": "(lldb) Launch",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/reststops",
+            "program": "${workspaceFolder}/snowboots",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",

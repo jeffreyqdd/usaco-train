@@ -2,11 +2,11 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "build reststops",
+            "label": "build snowboots",
             "type": "shell",
             "command": "c++",
             "args": [
-                "-std=c++11", "-stdlib=libc++","-g", "-o", "reststops", "reststops.cpp"
+                "-std=c++11", "-stdlib=libc++","-g", "-o", "snowboots", "snowboots.cpp"
             ],
             "group": {
                 "kind": "build",

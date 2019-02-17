@@ -54,8 +54,10 @@ int main()
 {
     ifstream fin("taming.in");
     ofstream fout("taming.out");
+    s
 
-    fin >> kLogs;
+            fin >>
+        kLogs;
     for (int i = 0; i < kLogs; i++)
         fin >> logs[i];
     fin.close();

@@ -51,7 +51,7 @@ void ConstructAdjList(vector<CowStat> &cow_list)
 set<int> seen;
 
 void DFS(int cow_index, vector<CowStat> const &cow_list)
-{
+{r
     //process
     if(seen.find(cow_index) != seen.end())
         return;

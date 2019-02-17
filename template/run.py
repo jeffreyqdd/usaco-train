@@ -12,7 +12,7 @@ print ("-- please put your .cpp, I.x and O.x files in the same directory")
 
 # look for the main cpp <project_name>.cpp and find project name
 
-for file in glob.glob("*.cpp"):
+for file in glob.glob("mountains.cpp"):
     
     break
 

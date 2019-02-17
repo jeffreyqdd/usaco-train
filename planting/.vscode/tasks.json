@@ -1,0 +1,17 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build planting",
+            "type": "shell",
+            "command": "c++",
+            "args": [
+                "-std=c++11", "-stdlib=libc++","-g", "-o", "planting", "planting.cpp"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        }
+    ]
+}

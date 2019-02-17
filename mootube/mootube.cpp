@@ -54,8 +54,8 @@ intl Bfs(Video const &video, vector<vector<Video>> const & path)
             }
         }
     }
-    intl zero = 0;
 
+    intl zero = 0;
     return max(zero, recommended-1);
 }
 
@@ -78,21 +78,10 @@ int main()
     for(int i=0; i<kVideos-1; i++)
     {
         intl v1, v2, revelance; fin >> v1 >> v2 >> revelance;
-
         video_path[v1].push_back({v2, revelance});
         video_path[v2].push_back({v1, revelance});
     }
-
-    /*
-    for(int i=1; i<=kVideos; i++)
-    {
-        cout << i << ":  [";
-        for(auto p : video_path[i])
-            cout << "{" << p.id << "," << p.rev << "}";
-        cout << "]\n"; 
-    }
-    */
-
+    
     //implement a bfs for each of fj's quetions
 
     //how many vids will be recomened if a cow watches video_i with a revelance of k_rev

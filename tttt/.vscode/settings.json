@@ -1,0 +1,13 @@
+{
+    "files.associations": {
+        "iostream": "cpp",
+        "tuple": "cpp",
+        "string": "cpp",
+        "algorithm": "cpp",
+        "ostream": "cpp",
+        "vector": "cpp",
+        "set": "cpp",
+        "iosfwd": "cpp"
+    },
+    "C_Cpp.errorSquiggles": "Disabled"
+}

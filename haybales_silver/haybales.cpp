@@ -56,6 +56,7 @@ int main()
         cout << n << " ";
     cout << endl;
     */
+    
     for(auto q : queries)
     {
         int a = q.first, b = q.second;
