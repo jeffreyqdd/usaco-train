@@ -5,27 +5,27 @@
 #include <queue>
 using namespace std;
 
-struct Schedule
+struct CowSchedule
 {
     int arrival;
     int eating_time;
     int seniority;
 
-    bool operator<(const Schedule &s) const{
+    bool operator<(const CowSchedule &s) const {
         return seniority > s.seniority;
     }
 };
 
 int kCows;
 
-bool TimeComp(Schedule &a, Schedule &b)
+bool TimeComp(const CowSchedule &a, const CowSchedule &b)
 {
     if(a.arrival == b.arrival)
         return a.seniority < b.seniority;
     else return a.arrival < b.arrival;
 }
 
-int Solve(vector<Schedule> & cows)
+int Solve(vector<CowSchedule> & cows)
 {
     int elapsed_time = 0;
     int max_wait = 0;
@@ -33,13 +33,13 @@ int Solve(vector<Schedule> & cows)
     int add_to = 0;
     
     //have a priority queue
-    priority_queue<Schedule> cow_q;
+    priority_queue<CowSchedule> cow_q;
     cow_q.push(cows[0]);
 
     //iterate for each object in the queue;
     while(!cow_q.empty())
     {
-        Schedule current_cow = cow_q.top();
+        CowSchedule current_cow = cow_q.top();
         
         cow_q.pop();
         //cout<<"size = "<<cow_q.size() << "entering cow" <<"(" <<current_cow.arrival << ","
@@ -88,20 +88,20 @@ int main()
     ifstream fin("convention2.in");
     ofstream fout("convention2.out");
 
-    vector<Schedule> cow_schedules;
+    vector<CowSchedule> cow_CowSchedules;
 
     fin >> kCows;
     for(int i = 0; i < kCows; i++)
     {
         int a, b; fin >> a >> b;
-        cow_schedules.push_back({a,b,i});
+        cow_CowSchedules.push_back({a,b,i});
     }
     
-    sort(cow_schedules.begin(), cow_schedules.end(), TimeComp);
+    sort(cow_CowSchedules.begin(), cow_CowSchedules.end(), TimeComp);
 
     fin.close();
 
-    fout << Solve(cow_schedules) << endl;
+    fout << Solve(cow_CowSchedules) << endl;
 
     fout.close();
 
