@@ -9,7 +9,7 @@
             "name": "(lldb) Launch",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/lemonade",
+            "program": "${workspaceFolder}/multimoo",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",

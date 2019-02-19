@@ -2,11 +2,11 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "build lemonade",
+            "label": "build multimoo",
             "type": "shell",
             "command": "c++",
             "args": [
-                "-std=c++11", "-stdlib=libc++","-g", "-o", "lemonade", "lemonade.cpp"
+                "-std=c++11", "-stdlib=libc++","-g", "-o", "multimoo", "multimoo.cpp"
             ],
             "group": {
                 "kind": "build",
