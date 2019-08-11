@@ -1,6 +1,6 @@
 /*
 ID: jeffrey66
-TASK: pprime
+TASK: sprime
 LANG: C++11
 */
 #include <iostream>
@@ -8,62 +8,50 @@ LANG: C++11
 #include <vector>
 using namespace std;
 
-vector<int> super_prime_ribs;
+
 
 bool IsPrime(int n)
 {
-    if (n <= 3)
-        return n > 1;
-    else if (n % 2 == 0 || n % 3 == 0)
-        return false;
 
-    int i = 5;
-
-    while (i * i <= n)
-    {
-
-        if ((n % i) == 0 || (n % (i + 2)) == 0)
-            return false;
-        i += 6;
-    }
-    return true;
+    // Corner cases 
+    if (n <= 1)  return false; 
+    if (n <= 3)  return true; 
+  
+    //according to wikipedia, factors of numbers can only be of:
+    //2, 3, 6k +- 1  
+    if (n%2 == 0 || n%3 == 0) return false; 
+  
+    //only need to check to sqrt(n)
+    for (int i=5; i*i<=n; i=i+6) 
+        if (n%i == 0 || n%(i+2) == 0) 
+           return false; 
+  
+    return true; 
 }
 
-bool IsSuperPrime(int n)
-{
-    for (; n > 0; n /= 10)
-    {
-        if (!IsPrime(n))
-            return false;
-    }
-    return true;
-}
 
-void Solve(int digits)
-{
-    //start with base num for ex if kDigits = 3, base num = 111
-    int num = 0;
-    int j = 1;
-    for (int i = 0; i < digits; i++)
+//recursively build
+vector<int> Solve(int digits)
+{   
+    if(digits == 1)
     {
-        num += j;
-        j *= 10;
+        vector<int> v = {2,3,5,7};
+        return v;
     }
 
-    cout << to_string(num).size() << endl;
-    //check validity
+    vector<int> prev = Solve(digits - 1);
+    vector<int> now;
 
-    //probably use sieve of eratoshenes to make it go faster
-    for (; to_string(num).size() == digits;)
+    for(int i = 0; i < prev.size(); i++)
     {
-        if (IsSuperPrime(num))
-            super_prime_ribs.push_back(num);
+        for(int j = 1; j <= 9; j += 2)
+        {
+            int num = prev[i] * 10 + j;
 
-        if (digits == 1)
-            num += 1;
-        else
-            num += 2;
+            if(IsPrime(num)) now.push_back(num);
+        }
     }
+    return now;
 }
 
 int main()
@@ -75,7 +63,7 @@ int main()
     fin >> kDigits;
     fin.close();
 
-    Solve(kDigits);
+    vector<int> super_prime_ribs = Solve(kDigits);
 
     for (auto v : super_prime_ribs)
         fout << v << endl;
