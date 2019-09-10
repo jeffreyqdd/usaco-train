@@ -7,40 +7,27 @@ LANG: C++11
 #include <fstream>
 using namespace std;
 
-//simple recursion
-void recurse(int num, int sum, int N, int half, int& cnt)
-{
-    if(sum == half)
-    {
-        cnt+= 1;
-        //cout << "here\n";
-        return;
-    }
-    else if(sum > half)
-        return;
-    else if(num > N)
-        return;
-    //cout << num << " : " << sum << endl;
-    
-    sum += num;
-    recurse(num + 1, sum, N, half, cnt);
-    sum -= num;
-    recurse(num + 1, sum, N, half, cnt);
-}
+
 int main()
 {
     ifstream fin("subset.in");
     ofstream fout("subset.out");
 
-    int N; fin >> N;
-    fin.close();
-
-
-    //we just need to find subsets that add up to half the sum
-    int half = N*(N+1) / 4, cnt = 0;
-    recurse(1, 0, N, half, cnt); 
-
-    fout << cnt/2 << endl;
+    long long N, sum, ways[800] = {1};
+    fin >> N; fin.close();
+    sum = N*(N+1)/2;
+    if(sum % 2 == 1)
+    {
+        fout << 0 << endl;
+        return 0;
+    }
+    //can i make number j using numbers up to i
+    for(int i = 1; i <= N; i++)
+        for(int j = sum - i; j >= 0; j--)
+            ways[i+j] += ways[j];
+            
+    fout << ways[sum / 2]/2 << endl;
     fout.close();
+
     return 0;
 }
