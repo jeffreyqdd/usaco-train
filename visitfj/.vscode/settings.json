@@ -1,0 +1,15 @@
+{
+    "files.associations": {
+        "iostream": "cpp",
+        "tuple": "cpp",
+        "string": "cpp",
+        "algorithm": "cpp",
+        "ostream": "cpp",
+        "vector": "cpp",
+        "random": "cpp",
+        "cmath": "cpp",
+        "fstream": "cpp",
+        "limits": "cpp"
+    },
+    "C_Cpp.errorSquiggles": "Disabled"
+}
