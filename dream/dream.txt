@@ -1,0 +1,30 @@
+
+
+Arr distance of size #ofnodes initialized to infinity
+
+distance[starting_node] = 0 //distance to start is zero
+
+p_queue q that contains a pair<weight,node>
+push(0, stating_node)
+
+
+While q is not empty:
+	pop item from queue
+
+	if item is what we need:
+		process
+
+	//check visited
+	//mark visited
+	
+	for child node to item:
+		starting node a
+		ending node b
+		edge weight to b called w
+		
+		if distance[a] + w is less than distance[b]:
+			set distance[b] to new new weight
+			push the pair -weight, new node to q
+
+
+
