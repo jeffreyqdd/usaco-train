@@ -1,10 +1,11 @@
 #include <iostream>
 #include <fstream>
+#include <algorithm>
 using namespace std;
 
 //just a side note: this is animal abuse farmer john..you should be ashamed of yourself
 
-#define MAX_N 100001
+#define MAX_N 100010
 
 struct Event
 {
@@ -18,7 +19,7 @@ struct Event
 };
 
 
-Event event[MAX_N];
+Event event[MAX_N * 2];
 
 int main()
 {
@@ -26,6 +27,7 @@ int main()
     ofstream fout("paint.out");
 
     int kMoves, kLayers; fin >> kMoves >> kLayers;
+
 
     int currLoc = 0;
     for(int i = 0; i < kMoves; i++)
@@ -46,10 +48,13 @@ int main()
 
 
     //traverse and solve;
-    sort(event, event + 2 * kMoves);
+
+    sort(event, event + (2 * kMoves));
 
     int currLayers = 0;
     int answer = 0;
+
+
     
     for(int i = 0; i < kMoves * 2; i++)
     {
