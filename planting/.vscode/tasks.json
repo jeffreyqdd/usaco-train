@@ -6,7 +6,7 @@
             "type": "shell",
             "command": "c++",
             "args": [
-                "-std=c++11", "-stdlib=libc++","-g", "-o", "planting", "planting.cpp"
+                "-std=c++11", "-stdlib=libc++","-g", "-o", "planting", "planting_new.cpp"
             ],
             "group": {
                 "kind": "build",

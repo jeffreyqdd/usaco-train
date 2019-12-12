@@ -1,10 +1,8 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-#include <vector>
-#include <set>
+#include <map>
 using namespace std;
-
 
 
 int main()
@@ -12,20 +10,40 @@ int main()
     ifstream fin("citystate.in");
     ofstream fout("citystate.out");
 
-    int kPairs; fin >> kPairs;
-    set<string> have_seen;
+    int N; fin >> N;
 
-    int cnt = 0;
-    for(int i=0; i < kPairs; i++)
+    map<string, int> cnt;
+
+    for(int i = 0; i < N; i++)
     {
-        string city,state; fin >> city >> state;
-        string s1 = city.substr(0,2);
-        string s2 = state.substr(0,2);
-        if(s1 > s2) swap(s1,s2);
-        string s3 = s1 + s2;
+        string s1, s2; fin >> s1 >> s2;
 
-        have_seen.insert(s3);
+        s1 = s1.substr(0, 2);
+        s2 = s2.substr(0, 2);
+
+        if(s1 != s2)
+            cnt[s1 + s2] += 1;
     }
-    cout << kPairs << " " << have_seen.size() << endl;
+
+
+    /*for(auto o : cnt)
+        cout << o.first << " " << o.second << endl;*/
+
+
+    int ret = 0;
+    for(auto o : cnt)
+    {
+        string nKey = o.first.substr(2) + o.first.substr(0,2);
+
+        if(cnt.find(nKey) != cnt.end())
+        {
+            ret += cnt[o.first] * cnt[nKey];
+            //cout << nKey << ": "<< cnt[nKey] << endl;
+        }
+    }
+    fout << ret / 2 << endl;
+
+
+
     return 0;
 }

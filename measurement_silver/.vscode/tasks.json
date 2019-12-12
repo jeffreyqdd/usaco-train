@@ -10,8 +10,8 @@
                 "-stdlib=libc++",
                 "-g",
                 "-o",
-                "measurement",
-                "measurement.cpp"
+                "measurement_new",
+                "measurement_new.cpp"
             ],
             "group": {
                 "kind": "build",

@@ -11,7 +11,7 @@
                 "-g",
                 "-o",
                 "haybales",
-                "haybales.cpp"
+                "haybales_new.cpp"
             ],
             "group": {
                 "kind": "build",

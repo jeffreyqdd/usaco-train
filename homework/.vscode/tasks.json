@@ -10,8 +10,8 @@
                 "-stdlib=libc++",
                 "-g",
                 "-o",
-                "homework",
-                "homework.cpp"
+                "homework_new",
+                "homework_new.cpp"
             ],
             "group": {
                 "kind": "build",
