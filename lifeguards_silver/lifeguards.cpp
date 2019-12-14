@@ -1,62 +1,73 @@
 #include <iostream>
 #include <fstream>
-#include <vector>
 #include <algorithm>
+#include <set>
+#include <vector>
 using namespace std;
 
-//sweeping line
-
-//time of event and whether is start (0) /stop (1)
 struct Event
 {
-    int t;
-    int type;
-    bool operator<(const Event &e) const{
-        if(t == e.t )
-            return type < e.type;
-        else 
-            return t < e.t;
+    int time, id;
+    Event(){}
+    Event(int time, int id): time(time), id(id) {}
+
+    bool operator<(const Event &e) const
+    {
+        return time < e.time;
     }
 };
-
-int kLifeguards;
-
-//find least time lost after firing 1 life guard
-int Solve(vector<Event> const &shifts)
-{   
-    //lg = lifeguard
-    int min_time = 1 << 30;
-    int lg_cnt = 0;
-    int index = 0;
-    int empty_time = 0;
-    //for a event : shifts
-    //approach is wrong...redo
-    
-    return min_time + empty_time;
-}
 int main()
 {
     ifstream fin("lifeguards.in");
     ofstream fout("lifeguards.out");
 
-    fin >> kLifeguards;
-
-    //read
-    vector<Event> event_record;
-    int day_start = 1000000001, day_stop = 0;
-
-    for(int i=0; i<kLifeguards; i++){
+    int N; fin >> N;
+    
+    vector<Event> events(2 * N);
+    vector<int> alone(N);
+    
+    for(int i = 0; i < N; i++)
+    {
         int start, stop; fin >> start >> stop;
-        event_record.push_back({start,0});
-        event_record.push_back({stop,1});
-        day_start = min(day_start, start); day_stop = max(day_stop, stop);
+
+        events[i * 2] = Event(start, i);
+        events[i*2 + 1] = Event(stop, i); 
     }
-    //sort the points based off time and start/stop. Prioritize start over stop
-    sort(event_record.begin(), event_record.end());
-    fin.close();
 
+    sort(events.begin(), events.end());
 
-    fout.close();
+    int totalTime = 0, last = 0;
+    set<int> active;
+    for(Event e : events)
+    {
+        set<int>::iterator itr = active.find(e.id);
+        set<int>::iterator itr_begin = active.begin();
+        if(active.size() == 1)
+            alone[*itr_begin] += e.time - last;
+        if(active.size() > 0)
+            totalTime += e.time - last;
+
+        if(itr != active.end())
+        {
+            //exists
+            active.erase(itr);
+        }
+        else
+        {
+            active.insert(e.id);
+        }
+
+        last = e.time;
+    }
+
+    int ret = 0;
+
+    for(int aloneTime : alone)
+    {
+        //cout << aloneTime << endl;
+        ret = max(ret, totalTime - aloneTime);
+    }
+    fout  << ret << endl;
 
     return 0;
 }
