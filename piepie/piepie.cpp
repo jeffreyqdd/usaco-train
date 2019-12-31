@@ -1,113 +1,92 @@
 #include <iostream>
+#include <algorithm>
 #include <fstream>
-#include <queue>
 #include <set>
 using namespace std;
-
-#define MAX_PIE 100000
-#define INF 100000000
-int bPie[MAX_PIE * 2] = {}, ePie[MAX_PIE * 2] = {};
-
+#define MAXN 100000
+#define INF 1000000000
+ 
+int N,D;
+int A[2*MAXN];
+int B[2*MAXN];
+int dist[2*MAXN];
+ 
+struct cmpA
+{
+	bool operator()(int a,int b) const
+	{
+		return B[a]<B[b];
+	}
+};
+ 
+struct cmpB
+{
+	bool operator()(int a,int b) const
+	{
+		return A[a]<A[b];
+	}
+};
+ 
+multiset<int,cmpA> sA;
+multiset<int,cmpB> sB;
+ 
+int que[2*MAXN];
+int cur,len;
+ 
 int main()
 {
     ifstream fin("piepie.in");
     ofstream fout("piepie.out");
 
-    int kTotalPie, kMaxTasty; fin >> kTotalPie >> kMaxTasty;
-
-    for(int i = 0; i < kTotalPie * 2; i++)
-        fin >> bPie[i] >> ePie[i];
-
-    fin.close();
-
-    /*for(int i = 0; i < kTotalPie * 2; i++)
-    {
-        cout << bPie[i] << " " << ePie[i] << endl;
-    }*/
-
-
-    int distance[MAX_PIE * 2] = {};
-    set<pair<int,int>> bessie, elsie;
-    
-    queue<int> q;
-    
-    for(int i = 0; i < 2 * kTotalPie; i++)
-    {
-        if(i >= kTotalPie) // bessie's pie
-        {
-            if(bPie[i] == 0)
-            {
-                distance[i] = 1; //start searc
-                //cout << "meow\n";
-                q.push(i);
-            }
-            else //push bessie's pref
-            {
-                distance[i] = INF;
-                bessie.insert(make_pair(bPie[i],i));
-            }
-        }
-        else // elsie's pie
-        {
-            if(ePie[i] == 0)
-            {
-                distance[i] = 1;
-                //cout << "meow\n";
-                q.push(i);
-            }
-            else
-            {
-                distance[i] = INF;
-                elsie.insert(make_pair(ePie[i], i));
-            }
-
-        }
-    }
-    
-
-
-    while(!q.empty())
-    {
-        int next = q.front(); q.pop();
-
-        //check for if whether bessie or elsie
-
-        if(next < kTotalPie) //bessie
-        {
-            auto it = bessie.lower_bound(make_pair(bPie[next] - kMaxTasty, -1));
-
-            while(it != bessie.end() && bPie[it->second] <= bPie[next])
-            {
-                distance[it -> second] = distance[next] + 1;
-                q.push(it -> second);
-                it = bessie.erase(it);
-
-                //cout << it -> second << endl;
-            }
-        }
-        else //elsie
-        {
-            auto it = elsie.lower_bound(make_pair(ePie[next] - kMaxTasty, -1));
-
-            while(it != elsie.end() && ePie[it -> second] <= ePie[next])
-            {
-                distance[it -> second] = distance[next] + 1;
-                q.push(it -> second);
-                it = elsie.erase(it);
-
-                //cout << it -> second << endl;
-            }
-        }
-
-    }
-
-    for(int i = 0; i < kTotalPie; i++)
-    {
-        if(distance[i] == INF)
-            fout << -1 << endl;
-        else 
-            fout << distance[i] << endl;
-    }
-    fout.close();
-    return 0;
+	fin >> N >> D;
+	for(int i=0;i<2*N;i++)
+	{
+		fin >> A[i] >> B[i];
+		A[i] = -A[i], B[i] = -B[i];
+		dist[i] = -1;
+	}
+	for(int i=0;i<N;i++)
+	{
+		if(B[i]==0)
+			que[len++] = i, dist[i] = 1;
+		else
+			sA.insert(i);
+		if(A[N+i]==0)
+			que[len++] = N+i, dist[N+i] = 1;
+		else
+			sB.insert(N+i);
+	}
+	multiset<int,cmpA>::iterator itA;
+	multiset<int,cmpB>::iterator itB;
+	while(cur < len)
+	{
+		int i = que[cur];
+		if(i < N)
+		{
+			while(1)
+			{
+				itB = sB.lower_bound(i);
+				if(itB == sB.end() || A[*itB] > A[i]+D)
+					break;
+				dist[*itB] = dist[i] + 1;
+				que[len++] = *itB;
+				sB.erase(itB);
+			}
+		}
+		else
+		{
+			while(1)
+			{
+				itA = sA.lower_bound(i);
+				if(itA == sA.end() || B[*itA] > B[i]+D)
+					break;
+				dist[*itA] = dist[i] + 1;
+				que[len++] = *itA;
+				sA.erase(itA);
+			}
+		}
+		cur++;
+	}
+	for(int i=0;i<N;i++)
+		fout << dist[i] << '\n';
 }

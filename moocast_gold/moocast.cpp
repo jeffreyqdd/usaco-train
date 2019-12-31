@@ -5,6 +5,7 @@
 using namespace std;
 
 #define MAX_COWS 1000
+#define ALL(x) begin(x), end(x)
 
 class DisjointSet
 {
@@ -27,6 +28,7 @@ public:
     {
         return root(i) == root(j);
     }
+    
         
     void combine(int i, int j)
     {
@@ -61,59 +63,60 @@ public:
     }
 };
 
+/*
+Approach: minimum spanning tree
+Implmentation: disjoint sets
+*/
+
 struct State
 {
-    int a,b,w;
-    
-    State(int i, int j, int weight): a(i), b(j), w(weight) {}
-    
-    bool operator<(const State &s) const
+    int a, b, dist; // connection btwn a - b with distance dist
+
+    bool operator<(const State& s) const
     {
-        return w < s.w;
+        return dist < s.dist;
     }
 };
+
 int main()
 {
     ifstream fin("moocast.in");
     ofstream fout("moocast.out");
 
-    int X[MAX_COWS], Y[MAX_COWS], N; fin >> N;
+    int N; fin >> N;
 
-    for(int i = 0; i < N; i++) //read
-        fin >> X[i] >> Y[i];
-    fin.close();
+    vector<State> cows;
+    vector<int> cowX(N), cowY(N);
+
+    for(int i = 0; i < N; i++)
+        fin >> cowX[i] >> cowY[i];
     
-    //calculate
-    vector<State> nodes;
-    for(int i = 0; i < N - 1; i++)
+    //pair
+    for(int i = 0; i < N; i++)
     {
         for(int j = i + 1; j < N; j++)
         {
-            //square of dist
-            int distance = (X[i] - X[j]) * (X[i] - X[j]) + (Y[i] - Y[j]) * (Y[i] - Y[j]);
-            nodes.push_back(State(i,j,distance));
+            //c^2 = a^2 + b^2
+            int dist =  (cowX[i] - cowX[j]) * (cowX[i] - cowX[j]) + (cowY[i] - cowY[j]) * (cowY[i] - cowY[j]);
+            cows.push_back({i,j,dist});
         }
     }
-    sort(nodes.begin(), nodes.end());
 
-    DisjointSet ds(N);
-    int lastWeight = 10; //bc I feel like it
-    
-    for(vector<State>::iterator it = nodes.begin(); it != nodes.end(); ++it)
+    sort(ALL(cows));
+
+    DisjointSet dj(N);
+    int ret = -21;
+    for(vector<State>::iterator it = cows.begin(); it != cows.end(); it++)
     {
-        if(ds.find(it -> a, it -> b))
+        if(dj.find(it -> a, it -> b))
             continue;
-
-        ds.combine(it -> a, it -> b);
-
-        lastWeight = it -> w;
-
-        if(ds.num_disjoint_sets() == 1)
+        dj.combine(it -> a, it ->b);
+        ret = it -> dist;
+        if(dj.num_disjoint_sets() == 1)
             break;
     }
 
-    fout << lastWeight << endl;
-    fout.close();
-    
+    fout << ret << endl;
+
     return 0;
 }

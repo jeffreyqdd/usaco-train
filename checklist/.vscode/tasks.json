@@ -11,7 +11,7 @@
                 "-g",
                 "-o",
                 "checklist",
-                "checklist.cpp"
+                "checklist_new.cpp"
             ],
             "group": {
                 "kind": "build",

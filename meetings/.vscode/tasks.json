@@ -1,0 +1,22 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build lifeguards",
+            "type": "shell",
+            "command": "c++",
+            "args": [
+                "-std=c++11",
+                "-stdlib=libc++",
+                "-g",
+                "-o",
+                "meetings",
+                "solution_meetings.cpp"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        }
+    ]
+}
