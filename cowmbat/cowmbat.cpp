@@ -2,8 +2,9 @@
 #include <fstream>
 using namespace std;
 
-#define MAX_M 26
 #define MAX_N 100002
+#define MAX_M 26
+
 
 int N, M, K, dist[MAX_M][MAX_M], cost[MAX_N][MAX_M], prefix[MAX_N][MAX_M];
 string S;
@@ -14,6 +15,7 @@ string S;
 
 int main()
 {
+
     ifstream fin("cowmbat.in");
     ofstream fout("cowmbat.out");
 
@@ -46,7 +48,7 @@ int main()
     } 
 
 
-    for(int i = 1; i <= N; i++)
+    /*for(int i = 1; i <= N; i++)
     {
         for(int j = 0; j < M; j++)
         {
@@ -62,7 +64,35 @@ int main()
             cout << prefix[i][j] << " ";
         }
         cout << endl;
-    } 
+    } */
+
+    int test[MAX_N][MAX_M];
+    //int minimum[MAX_N];
+    //memset(dp, 0x3f, sizeof(dp));
+    //memset(minimum, 0x3f, sizeof(minimum));
+    //minimum[0] = 0;
+    /*
+
+    for(int i = 1; i <= N; i++)
+    {
+        for(int j = 0; j < M; j++)
+        {
+            cout << "entering dp" << "[" << i << "]" <<
+                                     "[" << j << "]" <<
+                                     " = " << dp[i][j] << endl;
+
+            dp[i][j] = min(dp[i][j], dp[i-1][j] + cost[i][j]);
+
+            if (i >= K)
+                dp[i][j] = min(dp[i][j], prefix[i][j]-prefix[i-K][j]+minimum[i-K]);
+            
+            minimum[i] = min(minimum[i], dp[i][j]);
+        }
+    }
+    
+
+    */
+
 
     return 0;
 }
