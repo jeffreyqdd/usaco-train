@@ -1,119 +1,70 @@
 #include <iostream>
 #include <fstream>
-#include <map>
 #include <vector>
-#include <cmath>
-#include <cstring>
 using namespace std;
 
 #define MAX_N 1005
-#define MAX_M 1005
-#define INF 1 << 30
+#define MAX_T 1005
 
-int N, M, C; 
-map<int,int> income;
-vector<vector<int>> connections;
+long long N, M, C;
 
-
-//dp but it's weird
-//dp[i][j] = k
-//optimal money (k) at city (i) and move (j)
-int dp[MAX_N][MAX_M] = {};
-bool visited[MAX_N][MAX_M * 10] = {};
-
-int recurse(int city, int beginMoves, int& moves)
-{
-    //cout << "recursing:\n";
-    //cout << "entering city: " << city << " move: " << moves  << "  money = " << dp[city][moves] << endl;
-
-    if(city == 1 && beginMoves != moves)
-    {
-        //made a trip
-        //cout << "   round trip" << endl;
-        return income[city];
-    }
-    else
-    {
-        //move on to next trip
-        int& ref = dp[city][moves];
-        
-        if(!visited[city][moves])
-        {
-            ref = INF;
-
-            visited[city][moves] = true;
-
-            for(int newCity : connections[city])
-            {
-                int newLoss = (C * 2 * (moves + 1)) - 1;
-                int newGain = income[newCity];
-
-                int delta = newGain - newLoss;
-                
-                //cout << "   visiting: " << newCity << endl;
-                //cout << "   cost delta: " << newGain << " - " << newLoss << " = " << delta << endl;
-                
-                moves+=1;
-                ref = min(ref, delta + recurse(newCity, beginMoves, moves));
-                
-            }
-        }
-
-        return ref;
-    }
-
-
-    
-}
+long long value[MAX_N];
+long long dp[2][MAX_N];
+vector<pair<int, int>> edges;
 
 int main()
 {
     ifstream fin("time.in");
     ofstream fout("time.out");
 
-    fin >> N >> M >> C; 
+    fin >> N >> M >> C;
 
     for(int i = 1; i <= N; i++)
-        fin >> income[i];
-
-    connections.resize(M + 1);
-    for(int i = 1; i <= M; i++)
     {
-        int a, b; fin >> a >> b;
-        connections[a].push_back(b);
+        fin >> value[i];
+    }
+    
+    int a, b;
+    
+    for(int i = 0; i < M; i++)
+    {
+        fin >> a >> b;
+        edges.push_back({a,b});
     }
 
-    /*for(auto o : income) cout << o.first << " " << o.second << endl;
-    for(int i = 1; i <= M; i++)
+    long long maxProfit = 0;
+
+    memset(dp, -1, sizeof(dp));
+
+    dp[0][1] = 0;
+    
+    for(int t = 1; t < 15; t++)
     {
-        cout << i << " ";
-        for(auto o : connections[i])
-            cout << o << " ";
-        cout << endl;
-    }*/
+        int p = t % 2;
+        memset(dp[p], -1, sizeof(dp[p]));
 
 
-    int moves = 0;
-    int ret = 0;
+        cout << "entering: " << "time = " << t << ", p = " << p << endl;
 
-    while(true)
-    {
-        int delta = recurse(1,moves,moves);
-
-        if(delta <= 0)
+        for(auto& e : edges)
         {
-            break;
+            a = e.first;
+            b = e.second;
+            cout << "   visiting: " << a << " -> " << b << endl;
+
+            cout << "       = " << dp[1-p][a] << endl;
+
+            if(dp[1-p][a] >= 0)
+            {
+                dp[p][b] = max(dp[p][b], dp[1-p][a] + value[b]);
+
+                //cout << "   " << dp[p][b] << endl;
+            }
         }
-        else
-        {
-            ret += delta;
-        }
-        
-        memset(dp, 0, sizeof(dp));
-        memset(visited, false, sizeof(visited));
+        maxProfit = max(maxProfit, dp[p][1] - C * t * t);
     }
-   
-    fout << ret << endl;
+
+    cout << maxProfit << endl;
 
     return 0;
 }
