@@ -1,0 +1,29 @@
+What we know:
+    K practice sesssions
+    N cows in each practice sesssions
+
+What we want to know
+    Number of consistent pairs
+
+What is a consistent pair?
+    cow a is consistently ranked higher than cow b
+
+data:
+
+3 4
+4 1 2 3
+4 1 3 2
+4 2 1 3
+
+approach: Bronze problem, we can brutal force this
+
+1) read the data into a 2d array: arr[k practice sessions][N cows]
+
+2) generate all possible combinations of cows:
+    for cowA in range(1,N):
+        for cowB in range(1,N):
+            if(cowA != cowB)
+                iterate through every practice sessions
+                if cow a is conistent to cow b, increment counter
+
+3) return the answer (counter)

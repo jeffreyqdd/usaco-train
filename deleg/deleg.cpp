@@ -19,26 +19,7 @@ struct Leaf
     }
 };
 
-int N;
-vector<vector<int>> edges;
-set<Leaf> leaves;
 
-bool test(int k)
-{
-    set<Leaf>::iterator it = leaves.begin();
-
-    int pos = it -> pos; 
-
-    set<int> visited;
-    recurseUp(pos, visited);
-
-    return false;
-}
-
-void recurseUp(int pos, set<int>& visited)
-{
-    
-}
 
 
 void dfsLeaf(int curr, int depth)
