@@ -1,0 +1,14 @@
+{
+    "files.associations": {
+        "iostream": "cpp",
+        "tuple": "cpp",
+        "string": "cpp",
+        "algorithm": "cpp",
+        "ostream": "cpp",
+        "vector": "cpp",
+        "random": "cpp",
+        "deque": "cpp",
+        "cmath": "cpp"
+    },
+    "C_Cpp.errorSquiggles": "Disabled"
+}
